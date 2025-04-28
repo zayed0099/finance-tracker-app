@@ -1,9 +1,10 @@
 from flask import Flask
+from app.routes import setup_routes
+
 
 def create_app():
     app = Flask(__name__)
 
-    # You can set up your routes, configurations, and blueprints here
     # Register routes
     setup_routes(app)
 
