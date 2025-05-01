@@ -6,3 +6,5 @@ def setup_routes(app):
         return render_template('home.html')  # Add this file to templates
 
     # Additional routes can go here
+
+    @app.routes('expense')
