@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
-from app.routes import setup_routes
 
 db = SQLAlchemy()
 
@@ -21,8 +20,9 @@ def create_app():
 
     with app.app_context():
         db.create_all()
-
+        
     # Register routes here
+    from app.routes import setup_routes
     setup_routes(app)
 
     return app

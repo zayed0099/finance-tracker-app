@@ -1,5 +1,7 @@
 from flask import redirect, url_for, render_template, request, session
+from app import db
 from app.models import Details
+from datetime import datetime
 
 def setup_routes(app):
     @app.route('/')
@@ -15,11 +17,13 @@ def setup_routes(app):
             amount = request.form["amount"]
             categorize = request.form["category"]
             description = request.form["description"]
-            date = request.form["date"]
-            
-            new_input = Details(amount=amount, categorize=category, description=description, date=date)
+            date_input = request.form["date"]
+            valid_date = datetime.strptime(date_input, "%Y-%m-%d").date()
+
+            new_input = Details(user_id=user_id, amount=amount, category=categorize, description=description, date=valid_date)
             db.session.add(new_input)
             db.session.commit()
+            return render_template("forms.html")
 
         else:
             return render_template("forms.html")
