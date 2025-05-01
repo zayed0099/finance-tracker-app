@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 Not Found</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .error-container {
+      text-align: center;
+    }
+
+    .error-code {
+      font-size: 10rem;
+      font-weight: bold;
+      color: #ff6f61;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .error-message {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .btn-home {
+      font-weight: bold;
+      background-color: #ff6f61;
+      border: none;
+    }
+
+    .btn-home:hover {
+      background-color: #e65c50;
+    }
+
+    .glow {
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #ff6f61, 0 0 10px #ff6f61;
+      }
+      to {
+        text-shadow: 0 0 20px #ff6f61, 0 0 30px #ff6f61;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container error-container">
+    <div class="error-code glow">404</div>
+    <div class="error-message">Oops! Page not found</div>
+    <p class="mb-4">The page you're looking for doesn't exist or has been moved.</p>
+    <a href="/" class="btn btn-home btn-lg">Go Home</a>
+  </div>
+
+</body>
+</html>
