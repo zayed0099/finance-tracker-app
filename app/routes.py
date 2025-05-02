@@ -10,7 +10,7 @@ def setup_routes(app):
 
     # Additional routes can go here
 
-    @app.route('/expense', methods=["POST", "GET"])
+    @app.route('/add_expense', methods=["POST", "GET"])
     def adding_data():
         if request.method == "POST":
             user_id = request.form["user_id"]
@@ -27,4 +27,19 @@ def setup_routes(app):
 
         else:
             return render_template("forms.html")
-            
+
+    @app.route('/view')
+    def viewing_data():
+        all_details = Details.query.all()
+        return render_template("view.html", details=all_details)
+
+
+
+
+
+
+
+
+    # @app.route("/view")
+    # def view():
+    #     return render_template("view.html")
