@@ -19,6 +19,10 @@ def create_app():
     from . import models  # Import models so Flask knows about the tables. importing tables from models.py and creating them here
 
     with app.app_context():
+        # Print the actual DB path
+        db_path = app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', '')
+        print("🔍 Using database file at:", os.path.abspath(db_path))
+
         db.create_all()
         
     # Register routes here

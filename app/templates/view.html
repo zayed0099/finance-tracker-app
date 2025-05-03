@@ -27,16 +27,16 @@
 <body class="bg-light">
 	<div class="container-fluid">
   <div class="row full-height">
-     <div class="col-8 custom-dark d-flex align-items-center justify-content-center">
+     <div class="col-6 custom-dark d-flex align-items-center justify-content-center">
      <div class="container mt-5 p-4 bg-white shadow rounded">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="mb-0">All Expenses</h3>
-            <a href="/add_expense" class="btn btn-primary">+ Add Expense</a>
+            <!-- <a href="/add_expense" class="btn btn-primary">+ Add Expense</a> -->
         </div>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-                <thead class="table-dark">
+                <thead class="table-primary">
                     <tr>
                         <th>ID</th>
                         <th>User ID</th>
@@ -48,30 +48,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for data in details %}
+                    {% if details %}
+                        {% for data in details %}
+                        <tr>
+                            <td>{{ data.id }}</td>
+                            <td>{{ data.user_id }}</td>
+                            <td>{{ data.amount }}</td>
+                            <td>{{ data.category }}</td>
+                            <td>{{ data.description }}</td>
+                            <td>{{ data.date }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
                     <tr>
-                        <td>{{ data.id }}</td>
-                        <td>{{ data.user_id }}</td>
-                        <td>{{ data.amount }}</td>
-                        <td>{{ data.category }}</td>
-                        <td>{{ data.description }}</td>
-                        <td>{{ data.date }}</td>
-                        <!-- <td><a href="/delete/{{ data.id }}" class="btn btn-danger btn-sm">Delete</a></td> -->
+                        <td colspan="6">No data available</td>
                     </tr>
-                    {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </div>
     </div>
     </div>
-    <div class="col-4 bg-white text-white d-flex align-items-center justify-content-center">
-      <div class="container mt-5">
+    <div class="col-6 bg-white text-white d-flex align-items-center justify-content-center">
+    <!-- left side starts -->
+    <div class="container mt-5">
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Search Expense</h4>
+                <h4 class="mb-0">Expense Entry</h4>
             </div>
             <div class="card-body">
-                <form action="/expense" method="POST">
+                <form action="/view" method="POST">
                     <div class="mb-3">
                         <label for="user_id" class="form-label">User ID*</label>
                         <input type="text" class="form-control" id="user_id" name="user_id" required>
@@ -100,6 +106,9 @@
                     <button type="submit" class="btn btn-success">Add Expense</button>
                 </form>
             </div>
+        </div>
+    </div>
+    
         </div>
     </div>
     </div>
