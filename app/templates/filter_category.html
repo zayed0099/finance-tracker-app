@@ -42,11 +42,49 @@
 </head>
 <body>
 
-<h2>My Phonebook</h2>
+<h2>Expense Tracker</h2>
+<!-- 
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by Category" title="Type in a name"> -->
+<label for="user_id" class="form-label">User ID*</label>
+<input type="text" class="form-control" id="user_id" name="user_id" required>
+ <h3 class="mb-0">All Expenses</h3>
+            <!-- <a href="/add_expense" class="btn btn-primary">+ Add Expense</a> -->
+        </div>
 
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by Category" title="Type in a name">
-
-
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th>ID</th>
+                        <th>User ID</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <!-- <th>Actions</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if details %}
+                        {% for data in details %}
+                        <tr>
+                            <td>{{ data.id }}</td>
+                            <td>{{ data.user_id }}</td>
+                            <td>{{ data.amount }}</td>
+                            <td>{{ data.category }}</td>
+                            <td>{{ data.description }}</td>
+                            <td>{{ data.date }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="6">No data available</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </body>
 </html>
