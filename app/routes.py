@@ -1,4 +1,4 @@
-from flask import redirect, url_for, render_template, request, session
+from flask import redirect, url_for, render_template, request, session, flash, get_flashed_messages
 from app import db
 from app.models import Details
 from datetime import datetime
@@ -25,12 +25,24 @@ def setup_routes(app):
             db.session.add(new_input)
             db.session.commit()
             return redirect(url_for('adding_data'))  # Redirect to the same page
-        
+            
         all_details = Details.query.all()
         return render_template("view.html", details=all_details)
           
-    #@app.route("/view")
-    @app.route('/view', methods=["POST", "GET"])
+    @app.route('/manage-expense/update/<int:id>')
+    def update_data(id):
+        user_to_update = Details.query.get_or_404(id)
+        if request.method == "POST":
+            user_to_update.amount = request.form['amount']
+            user_to_update.description == request.form['description']
+            user_to_update.category == request.form['category']
+            db.session.commit()
+            return render_template("filter.html")
+        else:
+            return render_template("update.html")
+
+
+    @app.route('/dashboard', methods=["POST", "GET"])
     def filter_data():
         if request.method == "POST":
             user_input = request.form["fil_data"]

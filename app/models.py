@@ -10,3 +10,4 @@ class Details(db.Model):
     category = db.Column(db.String(20), nullable=False)
     description = db.Column(db.String(200))
     date = db.Column(db.Date, default=date.today)
+
