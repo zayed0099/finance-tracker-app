@@ -1,4 +1,4 @@
-from flask import redirect, url_for, render_template, request, session, flash, get_flashed_messages
+from flask import redirect, url_for, render_template, request, session
 from app import db
 from app.models import Details
 from datetime import datetime
@@ -7,7 +7,7 @@ from sqlalchemy import or_, cast, String
 def setup_routes(app):
     @app.route('/')
     def home():
-        return render_template('home.html', year=datetime.now().year)  # Add this file to templates
+        return render_template('home.html')  # Add this file to templates
 
     # Additional routes can go here
 
@@ -28,19 +28,6 @@ def setup_routes(app):
             
         all_details = Details.query.all()
         return render_template("view.html", details=all_details)
-          
-    @app.route('/manage-expense/update/<int:id>')
-    def update_data(id):
-        user_to_update = Details.query.get_or_404(id)
-        if request.method == "POST":
-            user_to_update.amount = request.form['amount']
-            user_to_update.description == request.form['description']
-            user_to_update.category == request.form['category']
-            db.session.commit()
-            return render_template("filter.html")
-        else:
-            return render_template("update.html")
-
 
     @app.route('/dashboard', methods=["POST", "GET"])
     def filter_data():
@@ -54,14 +41,13 @@ def setup_routes(app):
                 filtered_users = Details.query.filter(
                     or_(
                         Details.user_id.ilike(search_term),
-                        cast(Details.amount, String).ilike(search_term),
+                        cast(Details.amount, String).ilike(search_term), #cant use them directly because amount and date are not string so need to make them string using cast
                         Details.category.ilike(search_term),
                         Details.description.ilike(search_term),
                         cast(Details.date, String).ilike(search_term)
                     )
                 ).all()
-                
-                return render_template("filter.html", details=filtered_users)
+                return render_template("filter.html", details=filtered_users, id=id)
             else:
                 # return all records or a message
                 all_details = Details.query.all()
@@ -69,10 +55,31 @@ def setup_routes(app):
 
         return render_template("filter.html")
 
-    @app.route('/debug-2955')
-    def debug_db():
-        details = Details.query.all()
-        return "<br>".join([f"{d.user_id} - {d.amount} - {d.category}" for d in details])
+    @app.route("/manage-expense/update/<int:id>", methods=["POST", "GET"])
+    def update_data(id):
+        user_to_update = Details.query.get_or_404(id)
+        if request.method == "POST":
+            user_to_update.amount = request.form['amount']
+            db.session.commit()
+            user_to_update.description == request.form['description']
+            db.session.commit()
+            user_to_update.category == request.form['category']
+            db.session.commit()
+            return render_template("filter.html")
+        else:
+            return render_template("update.html", id=id)
+
+
+
+# Testing
+    # @app.route("/test")
+    # def test():
+    #     return render_template('update.html')
+
+    # @app.route('/debug-2955')
+    # def debug_db():
+    #     details = Details.query.all()
+    #     return "<br>".join([f"{d.user_id} - {d.amount} - {d.category}" for d in details])
     
 
 
@@ -87,25 +94,6 @@ def setup_routes(app):
 
 
 
-
-
-
-
-
-
-    #     filter_option = request.args.get('filter')
-    #     results = []
-
-    #     if filter_option == 'amount':
-    #         db.query_amount()
-    #     elif filter_option == 'category':
-    #         db.query_category()
-    #     elif filter_option == 'date':
-    #         db.quer_date()
-    #     else:
-    #         results = ['No matching filter.']
-
-    #     return render_template('filter_page.html', results=results)
 
 
 

@@ -6,6 +6,9 @@ db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
+
+    # secret key set-up
+    app.secret_key = 'we_steal_mangoes'
    
     # This line gets the full path to the app folder
     basedir = os.path.abspath(os.path.dirname(__file__))
