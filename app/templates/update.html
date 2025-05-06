@@ -8,15 +8,15 @@
   <form action="{{url_for('update_data', id=id)}}" method="POST">
     <div class="mb-3">
       <label for="amount" class="form-label">Amount</label>
-      <input type="text" class="form-control" id="amount" name="amount" placeholder="New amount">
+      <input type="text" class="form-control" id="amount" name="amount" value="{{ user.amount }}">
     </div>
     <div class="mb-3">
       <label for="category" class="form-label">Category</label>
-      <input type="text" class="form-control" id="category" name="category" placeholder="New category">
+      <input type="text" class="form-control" id="category" name="category" value="{{ user.category }}">
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <input type="text" class="form-control" id="description" name="description" placeholder="New description">
+      <input type="text" class="form-control" id="description" name="description" value="{{ user.description }}">
     </div>
     <button type="submit" class="btn btn-success w-100">Submit</button>
   </form>

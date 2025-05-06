@@ -62,7 +62,7 @@ def setup_routes(app):
             db.session.commit()
             return render_template("filter.html")
         else:
-            return render_template("update.html", id=id)
+            return render_template("update.html", id=id, user=user_to_update)
 
 
 
