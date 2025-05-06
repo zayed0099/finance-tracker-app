@@ -29,7 +29,7 @@ def setup_routes(app):
         all_details = Details.query.all()
         return render_template("view.html", details=all_details)
 
-    @app.route('/dashboard', methods=["POST", "GET"])
+    @app.route('/manage-expense/view', methods=["POST", "GET"])
     def filter_data():
         if request.method == "POST":
             user_input = request.form["fil_data"]

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Update/Delete{% endblock %}
 
 {% block content %}
 
@@ -57,12 +57,13 @@
           <h4 class="mb-0">Expense Search</h4>
       </div>
       <div class="card-body">
-          <form action="/dashboard" method="POST">
+          <form action="{{ url_for('filter_data') }}" method="POST">
               <div class="mb-3">
                   <label for="user_id" class="form-label" >Filter Label*</label>
                   <input type="text" class="form-control" id="filter_query" name="fil_data" placeholder="Search by amount, category, description, date(YYYY-MM-DD)" required>
               </div>
               <button type="submit" class="btn btn-success">Apply Filter</button>
+              <a href="{{ url_for('filter_data') }}" class="btn btn-secondary">Reset Filter</a>
           </form>
       </div>
   </div>
@@ -92,7 +93,7 @@
                         <td>{{ data.description }}</td>
                         <td>{{ data.date }}</td>
                        <td><a href="{{url_for('update_data', id = data.id)}}" class="btn btn-primary">Update</a></td>
-                        <td><a href="{{url_for('delete_data', id = data.id)}}" class="btn btn-primary" aria-label="Add Expense">
+                        <td><a href="{{url_for('delete_data', id = data.id)}}" class="btn btn-danger" aria-label="Add Expense">
     <svg xmlns="http://www.w3.org/2000/svg"
          width="16" height="16"
          fill="currentColor"
