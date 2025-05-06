@@ -64,9 +64,21 @@ def setup_routes(app):
         else:
             return render_template("update.html", id=id, user=user_to_update)
 
+    @app.route("/manage-expense/delete/<int:id>", methods=["POST", "GET"])
+    def delete_data(id):
+        user_to_delete = Details.query.get_or_404(id)
+        if request.method == "POST":
+            del_confirm = request.form["delete_confirm"]
+            if del_confirm.lower() == 'delete':
+                db.session.delete(user_to_delete)
+                db.session.commit()
+                return render_template("filter.html")
+        else:
+            return render_template("delete.html", id=id, user=user_to_delete)
 
 
-# Testing
+
+    # Testing
     # @app.route("/test")
     # def test():
     #     return render_template('update.html')

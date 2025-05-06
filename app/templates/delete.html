@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Update Data{% endblock %}
+
+{% block content %}
+<div class="card shadow p-4 bg-white mx-auto" style="max-width: 500px;">
+  <h4 class="text-center mb-4 text-white py-2 rounded" style="background: linear-gradient(to right, #0066cc, #00aaff);">You can update data if you want!</h4>
+
+  
+
+    <div class="mb-3">
+      <label for="amount" class="form-label">Amount</label>
+      <input type="text" class="form-control" id="amount" name="amount" value="{{ user.amount }}" readonly>
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <input type="text" class="form-control" id="category" name="category" value="{{ user.category }}" readonly>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <input type="text" class="form-control" id="description" name="description" value="{{ user.description }}" readonly>
+    </div>
+    <form action="{{url_for('delete_data', id=id)}}" method="POST">
+      <label for="delete" class="form-label">Are you sure?</label>
+      <input type="text" class="form-control" id="delete" name="delete_confirm" placeholder="Enter 'delete' to confirm">
+    <button type="submit" class="btn btn-success w-100" >Confirm delete</button>
+<a href="/dashboard" class="btn btn-primary w-100">Update</a>
+  </form>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

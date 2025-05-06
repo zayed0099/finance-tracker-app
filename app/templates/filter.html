@@ -59,8 +59,8 @@
       <div class="card-body">
           <form action="/dashboard" method="POST">
               <div class="mb-3">
-                  <label for="user_id" class="form-label">Filter Label*</label>
-                  <input type="text" class="form-control" id="filter_query" name="fil_data" required>
+                  <label for="user_id" class="form-label" >Filter Label*</label>
+                  <input type="text" class="form-control" id="filter_query" name="fil_data" placeholder="Search by amount, category, description, date(YYYY-MM-DD)" required>
               </div>
               <button type="submit" class="btn btn-success">Apply Filter</button>
           </form>
@@ -76,8 +76,9 @@
                     <!-- <th>User ID</th> -->
                     <th>Amount</th>
                     <th>Category</th>
-                    <th>Description</th>
-                    <th>Date</th>
+                    <th>Description</th>    <!-- in line 95,96 - data.id came from the for loop above--><th>Date</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -90,7 +91,24 @@
                         <td>{{ data.category }}</td>
                         <td>{{ data.description }}</td>
                         <td>{{ data.date }}</td>
-                        <td><a href="{{url_for('update_data', id = data.id)}}" class="btn btn-primary">Update</a></td>
+                       <td><a href="{{url_for('update_data', id = data.id)}}" class="btn btn-primary">Update</a></td>
+                        <td><a href="{{url_for('delete_data', id = data.id)}}" class="btn btn-primary" aria-label="Add Expense">
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="16" height="16"
+         fill="currentColor"
+         class="bi bi-trash-fill"
+         viewBox="0 0 16 16">
+      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 
+               2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0 
+               -1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 
+               0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 
+               .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 
+               0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 
+               0v-7a.5.5 0 0 1 1 0"/>
+    </svg>
+  </a>
+</td>
+
                     </tr>
                     {% endfor %}
                 {% else %}
