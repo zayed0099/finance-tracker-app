@@ -34,7 +34,7 @@ def setup_routes(app):
         if request.method == "POST":
             user_input = request.form["fil_data"]
             search_term = f"%{user_input}%"
-            user_input = request.form.get("fil_data", "").strip()
+            user_input = request.form.get("fil_data", "").strip() # forgot why it was done
             
             if user_input:
                 # ... apply search filter
@@ -48,22 +48,17 @@ def setup_routes(app):
                     )
                 ).all()
                 return render_template("filter.html", details=filtered_users, id=id)
-            else:
-                # return all records or a message
-                all_details = Details.query.all()
-                return render_template("filter.html", details=all_details)
 
-        return render_template("filter.html")
+        all_details = Details.query.all() # by default get. 
+        return render_template("filter.html", details=all_details)
 
     @app.route("/manage-expense/update/<int:id>", methods=["POST", "GET"])
     def update_data(id):
         user_to_update = Details.query.get_or_404(id)
         if request.method == "POST":
             user_to_update.amount = request.form['amount']
-            db.session.commit()
-            user_to_update.description == request.form['description']
-            db.session.commit()
-            user_to_update.category == request.form['category']
+            user_to_update.description = request.form['description']
+            user_to_update.category = request.form['category']
             db.session.commit()
             return render_template("filter.html")
         else:
