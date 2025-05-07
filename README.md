@@ -62,21 +62,20 @@ A personal finance tracking web app built using **Flask**, with CRUD functionali
 
 ## 📁 Project Structure (Basic Overview)
 
-main test codes/
 ├── run.py
 └── app/
-    ├── __init__.py
-    ├── routes.py
-    ├── models.py
-    ├── app.db
-    └── templates/
-        ├── base.html
-        ├── dashboard.html
-        ├── delete.html
-        ├── filter.html
-        ├── home.html
-        ├── update.html
-        └── view.html
+├── init.py
+├── routes.py
+├── models.py
+├── app.db
+└── templates/
+    ├── base.html
+    ├── dashboard.html
+    ├── delete.html
+    ├── filter.html
+    ├── home.html
+    ├── update.html
+    └── view.html
 
 
 ## 🧠 Author Notes
