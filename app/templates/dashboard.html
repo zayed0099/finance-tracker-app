@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    .dashboard-header {
+        background: linear-gradient(to right, #0066cc, #00aaff);
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 8px;
+    }
+
+    .charts-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .chart-container {
+        flex: 1;
+        min-width: 300px;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    table {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .table th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f2f6ff;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #cce5ff;
+    }
+</style>
+
+<div class="card shadow p-4 bg-white mx-auto" style="max-width: 1200px;">
+    <h3 class="dashboard-header mb-4">Dashboard</h3>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+        <div class="chart-container">
+            <object type="image/svg+xml" data="{{ chart_data }}" height="300"></object>
+        </div>
+        <div class="chart-container">
+            <object type="image/svg+xml" data="{{ chart_data_bar }}" height="300"></object>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="p-3 bg-white shadow rounded">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">All Expenses</h4>
+            <a href="{{ url_for('filter_data') }}" class="btn btn-primary btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path
+                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd"
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                </svg>
+                Update/Delete Expense
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if details %}
+                    {% for data in details %}
+                        <tr>
+                            <td>{{ data.id }}</td>
+                            <td>{{ data.amount }}</td>
+                            <td>{{ data.category }}</td>
+                            <td>{{ data.description }}</td>
+                            <td>{{ data.date }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">No data available</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

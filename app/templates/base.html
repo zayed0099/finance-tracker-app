@@ -53,6 +53,24 @@
     text-align: center;
     line-height: 60px;
   }
+  .navbar-dark .dropdown-menu {
+  background-color: #343a40;
+  border: none;
+}
+
+.navbar-dark .dropdown-item {
+  color: #dddddd;
+}
+
+.navbar-dark .dropdown-item:hover,
+.navbar-dark .dropdown-item:focus {
+  color: #ffffff;
+  background-color: #495057;
+}
+.navbar-dark .dropdown-menu {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 </style>
 
 
@@ -73,8 +91,18 @@
     <div class="collapse navbar-collapse" id="mainNavbar">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="/manage-expense">Manage Expense</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="manageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Manage Expense
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="manageDropdown">
+    <li><a class="dropdown-item" href="{{ url_for('filter_data') }}">Update/Delete Expense</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+
         <!-- <li class="nav-item"><a class="nav-link" href="#">Contact</a></li> -->
       </ul>
       <!-- <a class="btn btn-custom" href="#">Sign Up</a> -->
