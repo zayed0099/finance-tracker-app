@@ -10,8 +10,7 @@ def setup_routes(app):
 	def home():
 		return render_template('home.html')  # Add this file to templates
 
-	# Additional routes can go here
-
+		# Data entry in the system
 	@app.route('/manage-expense', methods=["POST", "GET"])
 	def adding_data():
 		if request.method == "POST":
@@ -30,13 +29,13 @@ def setup_routes(app):
 		all_details = Details.query.all()
 		return render_template("view.html", details=all_details)
 
+		# filtering data + option to update and delete
 	@app.route('/manage-expense/view', methods=["POST", "GET"])
 	def filter_data():
 		if request.method == "POST":
-			user_input = request.form["fil_data"]
+			user_input = request.form.get("fil_data", "").strip() # Safely get and clean user input by removing extra spaces
 			search_term = f"%{user_input}%"
-			user_input = request.form.get("fil_data", "").strip() # forgot why it was done
-			
+	
 			if user_input:
 				# ... apply search filter
 				filtered_users = Details.query.filter(
@@ -53,6 +52,7 @@ def setup_routes(app):
 		all_details = Details.query.all() # by default get. 
 		return render_template("filter.html", details=all_details)
 
+		# updating data
 	@app.route("/manage-expense/update/<int:id>", methods=["POST", "GET"])
 	def update_data(id):
 		user_to_update = Details.query.get_or_404(id)
@@ -66,6 +66,7 @@ def setup_routes(app):
 		else:
 			return render_template("update.html", id=id, user=user_to_update)
 
+		# deleting data
 	@app.route("/manage-expense/delete/<int:id>", methods=["POST", "GET"])
 	def delete_data(id):
 		user_to_delete = Details.query.get_or_404(id)
@@ -78,7 +79,7 @@ def setup_routes(app):
 		else:
 			return render_template("delete.html", id=id, user=user_to_delete)
 
-
+		# dashboard with graph and table of all data in db
 	@app.route("/dashboard")
 	def dashboard():
 		results = db.session.query(
