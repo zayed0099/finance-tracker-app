@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
+from flask_login import LoginManager
 
 db = SQLAlchemy()
+login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
@@ -27,7 +29,17 @@ def create_app():
         print("🔍 Using database file at:", os.path.abspath(db_path))
 
         db.create_all()
-        
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        try:
+            return User.query.get(int(user_id))
+        except Exception as e:
+            return None
+
+    login_manager.login_view = 'login'
+       
     # Register routes here
     from app.routes import setup_routes
     setup_routes(app)
