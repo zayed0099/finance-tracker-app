@@ -29,14 +29,15 @@ def create_app():
         print("🔍 Using database file at:", os.path.abspath(db_path))
 
         db.create_all()
+    
+    from app.models import User
+
     login_manager.init_app(app)
 
     @login_manager.user_loader
     def load_user(user_id):
-        try:
-            return User.query.get(int(user_id))
-        except Exception as e:
-            return None
+        return User.query.get(int(user_id))
+
 
     login_manager.login_view = 'login'
        

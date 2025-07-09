@@ -1,8 +1,9 @@
 from . import db
 from datetime import date
+from flask_login import UserMixin
 
 # we will only create the tables here. all the other works will be done in init.py
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'user_db'
     
     id = db.Column(db.Integer, primary_key=True)
