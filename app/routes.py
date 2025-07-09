@@ -74,11 +74,14 @@ def setup_routes(app):
             valid_date = datetime.strptime(date_input, "%Y-%m-%d").date()
 
             new_input = Details(user_id=current_user.id, amount=amount, category=categorize, description=description, date=valid_date)
-            db.session.add(new_input)
-            db.session.commit()
-            return redirect(url_for('adding_data'))  # Redirect to the same page
-            
-        all_details = Details.query.all()
+            try:
+                db.session.add(new_input)
+                db.session.commit()
+                return redirect(url_for('adding_data'))  # Redirect to the same page
+            except SQLAlchemyError as e:
+                db.session.rollback()
+                return redirect(url_for('adding_data'))
+        all_details = Details.query.filter(Details.user_id == current_user.id).all()
         return render_template("view.html", details=all_details)
 
         # filtering data + option to update and delete
@@ -110,7 +113,12 @@ def setup_routes(app):
     @app.route("/manage-expense/update/<int:id>", methods=["POST", "GET"])
     @login_required
     def update_data(id):
-        user_to_update = Details.query.get_or_404(id)
+        
+        user_to_update = Details.query.filter(
+            Details.user_id == current_user.id
+            ,Details.id == id
+            ).first_or_404()
+
         if request.method == "POST":
             user_to_update.amount = request.form['amount']
             user_to_update.description = request.form['description']
@@ -125,7 +133,10 @@ def setup_routes(app):
     @app.route("/manage-expense/delete/<int:id>", methods=["POST", "GET"])
     @login_required
     def delete_data(id):
-        user_to_delete = Details.query.get_or_404(id)
+        user_to_delete = Details.query.filter(
+            Details.user_id == current_user.id
+            ,Details.id == id
+            ).first_or_404()
         if request.method == "POST":
             del_confirm = request.form["delete_confirm"]
             if del_confirm.lower() == 'delete':
@@ -139,9 +150,11 @@ def setup_routes(app):
     @app.route("/dashboard")
     @login_required
     def dashboard():
+         # filters data from  amount by category and sums them
         results = db.session.query(
-                Details.category,       # filters data from  amount by category and sums them
+                Details.category,       
                 func.sum(Details.amount)
+            ).filter(Details.user_id == current_user.id
             ).group_by(Details.category).all()
 
         if results:
